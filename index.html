@@ -23,8 +23,10 @@
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    max-width: 320px;
+    max-width: 340px;
     width: 90%;
+    position: relative;
+    z-index: 2;
   }
 
   h1 {
@@ -43,7 +45,7 @@
   }
 
   button {
-    padding: 12px 24px;
+    padding: 12px 26px;
     border-radius: 30px;
     border: none;
     font-size: 18px;
@@ -57,7 +59,7 @@
   }
 
   #no {
-    background: #ddd;
+    background: #eee;
     position: absolute;
     left: 160px;
     top: 0;
@@ -73,32 +75,32 @@
     to { transform: scale(1); opacity: 1; }
   }
 
-  .heart {
+  .heart, .sparkle, .confetti {
     position: fixed;
-    font-size: 24px;
+    font-size: 22px;
+    pointer-events: none;
     animation: float 4s linear infinite;
   }
+
+  .sparkle { font-size: 18px; }
+  .confetti { font-size: 16px; }
 
   @keyframes float {
     from { transform: translateY(100vh); opacity: 1; }
     to { transform: translateY(-10vh); opacity: 0; }
   }
+
+  img {
+    width: 100%;
+    border-radius: 16px;
+    margin-top: 15px;
+  }
 </style>
 </head>
 <body>
 
-<!-- 🎵 Background Music (Hidden YouTube Player) -->
-<iframe
-  width="0"
-  height="0"
-  src="https://www.youtube.com/embed/7r9Qp6pG5nA?autoplay=1&loop=1&playlist=7r9Qp6pG5nA"
-  frameborder="0"
-  allow="autoplay"
-  allowfullscreen>
-</iframe>
-
 <div class="card" id="card">
-  <h1>💖 Hey Y-O-S-H-I-T-A 💖</h1>
+  <h1>💖 Hey Yoshita 💖</h1>
   <p>Will you be my Valentine? 🌹</p>
 
   <div class="buttons">
@@ -108,38 +110,64 @@
 </div>
 
 <div class="card surprise" id="surprise">
-  <h1>🎉 YAYYYY!!! 🎉</h1>
-  <p>You just made my heart go BOOM 💥💖</p>
+  <h1>🎉 SHE SAID YES!!! 🎉</h1>
+  <p>My heart is officially yours 💥💖</p>
+
+  <!-- 😍 Cute Excited Meme -->
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzYzYjM1NTVjYmYxNmI2ZjE4N2M0OWVjZDNlZGFmOGE5YzQ2ZGMxNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0MYt5jPR6QX5pnqM/giphy.gif">
+
   <p>Happy Valentine’s Day 😍</p>
 </div>
+
+<!-- 🎵 Music (plays on YES click) -->
+<audio id="music">
+  <source src="https://www.youtube.com/embed/7r9Qp6pG5nA" type="audio/mp3">
+</audio>
 
 <script>
   const noBtn = document.getElementById('no');
   const yesBtn = document.getElementById('yes');
   const card = document.getElementById('card');
   const surprise = document.getElementById('surprise');
+  const music = document.getElementById('music');
 
   noBtn.addEventListener('mouseover', () => {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 100;
+    const x = Math.random() * 250 - 125;
+    const y = Math.random() * 120;
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
   });
 
   yesBtn.addEventListener('click', () => {
     card.style.display = 'none';
     surprise.style.display = 'block';
-    startHearts();
+    playMusic();
+    effects();
   });
 
-  function startHearts() {
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.innerText = '💖';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = 2 + Math.random() * 3 + 's';
-      document.body.appendChild(heart);
+  function playMusic() {
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/7r9Qp6pG5nA?autoplay=1";
+    iframe.width = 0;
+    iframe.height = 0;
+    iframe.allow = "autoplay";
+    document.body.appendChild(iframe);
+  }
+
+  function effects() {
+    for (let i = 0; i < 40; i++) {
+      createEffect('💖', 'heart');
+      createEffect('✨', 'sparkle');
+      createEffect('🎉', 'confetti');
     }
+  }
+
+  function createEffect(symbol, className) {
+    const el = document.createElement('div');
+    el.className = className;
+    el.innerText = symbol;
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = 2 + Math.random() * 3 + 's';
+    document.body.appendChild(el);
   }
 </script>
 
