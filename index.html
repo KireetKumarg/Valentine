@@ -6,98 +6,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
 
-  .card {
-    background: white;
-    padding: 30px 25px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    max-width: 340px;
-    width: 90%;
-    position: relative;
-    z-index: 2;
-  }
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
+  max-width: 350px;
+  width: 90%;
+  z-index: 2;
+}
 
-  h1 {
-    color: #ff4d6d;
-    margin-bottom: 10px;
-  }
+h1 {
+  color: #ff4d6d;
+}
 
-  p {
-    font-size: 18px;
-    margin-bottom: 25px;
-  }
+.buttons {
+  position: relative;
+  height: 120px;
+}
 
-  .buttons {
-    position: relative;
-    height: 120px;
-  }
+button {
+  padding: 14px 30px;
+  border-radius: 40px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
 
-  button {
-    padding: 12px 26px;
-    border-radius: 30px;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    transition: 0.2s;
-  }
+#yes {
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white;
+  box-shadow: 0 8px 20px rgba(255,77,109,0.6);
+}
 
-  #yes {
-    background: #ff4d6d;
-    color: white;
-  }
+#no {
+  background: #eee;
+  position: absolute;
+  left: 170px;
+}
 
-  #no {
-    background: #eee;
-    position: absolute;
-    left: 160px;
-    top: 0;
-  }
+.surprise {
+  display: none;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  color: #b3003c;
+  animation: pop 0.6s ease forwards;
+}
 
-  .surprise {
-    display: none;
-    animation: pop 0.6s ease forwards;
-  }
+@keyframes pop {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-  @keyframes pop {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
+img {
+  width: 100%;
+  border-radius: 18px;
+  margin: 15px 0;
+  animation: bounce 1.5s infinite;
+}
 
-  .heart, .sparkle, .confetti {
-    position: fixed;
-    font-size: 22px;
-    pointer-events: none;
-    animation: float 4s linear infinite;
-  }
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
-  .sparkle { font-size: 18px; }
-  .confetti { font-size: 16px; }
+.effect {
+  position: fixed;
+  font-size: 22px;
+  animation: float 4s linear infinite;
+}
 
-  @keyframes float {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
-  }
-
-  img {
-    width: 100%;
-    border-radius: 16px;
-    margin-top: 15px;
-  }
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
 </style>
 </head>
 <body>
+
+<!-- 🎵 Background Music (WORKS everywhere) -->
+<audio id="bgMusic" preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_8b1a3b4c43.mp3" type="audio/mpeg">
+</audio>
 
 <div class="card" id="card">
   <h1>💖 Hey Yoshita 💖</h1>
@@ -111,64 +112,49 @@
 
 <div class="card surprise" id="surprise">
   <h1>🎉 SHE SAID YES!!! 🎉</h1>
-  <p>My heart is officially yours 💥💖</p>
+  <p>I knew you would 😘💖</p>
 
-  <!-- 😍 Cute Excited Meme -->
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzYzYjM1NTVjYmYxNmI2ZjE4N2M0OWVjZDNlZGFmOGE5YzQ2ZGMxNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0MYt5jPR6QX5pnqM/giphy.gif">
+  <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
 
-  <p>Happy Valentine’s Day 😍</p>
+  <p>Happy Valentine’s Day 💕</p>
 </div>
 
-<!-- 🎵 Music (plays on YES click) -->
-<audio id="music">
-  <source src="https://www.youtube.com/embed/7r9Qp6pG5nA" type="audio/mp3">
-</audio>
-
 <script>
-  const noBtn = document.getElementById('no');
-  const yesBtn = document.getElementById('yes');
-  const card = document.getElementById('card');
-  const surprise = document.getElementById('surprise');
-  const music = document.getElementById('music');
+const noBtn = document.getElementById('no');
+const yesBtn = document.getElementById('yes');
+const card = document.getElementById('card');
+const surprise = document.getElementById('surprise');
+const music = document.getElementById('bgMusic');
 
-  noBtn.addEventListener('mouseover', () => {
-    const x = Math.random() * 250 - 125;
-    const y = Math.random() * 120;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  });
+noBtn.addEventListener('mouseover', () => {
+  const x = Math.random() * 260 - 130;
+  const y = Math.random() * 120;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
 
-  yesBtn.addEventListener('click', () => {
-    card.style.display = 'none';
-    surprise.style.display = 'block';
-    playMusic();
-    effects();
-  });
+yesBtn.addEventListener('click', () => {
+  card.style.display = 'none';
+  surprise.style.display = 'block';
+  music.play();
+  effects();
+});
 
-  function playMusic() {
-    const iframe = document.createElement("iframe");
-    iframe.src = "https://www.youtube.com/embed/7r9Qp6pG5nA?autoplay=1";
-    iframe.width = 0;
-    iframe.height = 0;
-    iframe.allow = "autoplay";
-    document.body.appendChild(iframe);
+function effects() {
+  for (let i = 0; i < 40; i++) {
+    create('💖');
+    create('✨');
+    create('🎉');
   }
+}
 
-  function effects() {
-    for (let i = 0; i < 40; i++) {
-      createEffect('💖', 'heart');
-      createEffect('✨', 'sparkle');
-      createEffect('🎉', 'confetti');
-    }
-  }
-
-  function createEffect(symbol, className) {
-    const el = document.createElement('div');
-    el.className = className;
-    el.innerText = symbol;
-    el.style.left = Math.random() * 100 + 'vw';
-    el.style.animationDuration = 2 + Math.random() * 3 + 's';
-    document.body.appendChild(el);
-  }
+function create(symbol) {
+  const el = document.createElement('div');
+  el.className = 'effect';
+  el.innerText = symbol;
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.animationDuration = 2 + Math.random() * 3 + 's';
+  document.body.appendChild(el);
+}
 </script>
 
 </body>
